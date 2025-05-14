@@ -1,5 +1,6 @@
 import React from "react";
 import { Users, Badge, Mic2, UserRound } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const mockUsers = [
   {
@@ -8,39 +9,15 @@ const mockUsers = [
     isHost: true,
     avatar: "/placeholder.svg?height=40&width=40",
   },
-  {
-    id: 2,
-    name: "Taylor",
-    isHost: false,
-    avatar: "/placeholder.svg?height=40&width=40",
-  },
-  {
-    id: 3,
-    name: "Jordan",
-    isHost: false,
-    avatar: "/placeholder.svg?height=40&width=40",
-  },
-  {
-    id: 4,
-    name: "Alex",
-    isHost: true,
-    avatar: "/placeholder.svg?height=40&width=40",
-  },
-  {
-    id: 5,
-    name: "Taylor",
-    isHost: false,
-    avatar: "/placeholder.svg?height=40&width=40",
-  },
-  {
-    id: 6,
-    name: "Jordan",
-    isHost: false,
-    avatar: "/placeholder.svg?height=40&width=40",
-  },
 ];
 
 function UsersBox() {
+  const Navigate = useNavigate()
+  
+  function exitRoom() {
+    // lofic here
+    Navigate("/");
+  }
   return (
     <div>
       {/* Sidebar - Users in room */}
@@ -50,12 +27,6 @@ function UsersBox() {
             <Users className="h-4 w-4 mr-2 text-purple-400" />
             In This Room
           </h3>
-          <Badge
-            variant="outline"
-            className="bg-purple-600/20 border-purple-600/30"
-          >
-            {mockUsers.length}
-          </Badge>
         </div>
 
         <div className="space-y-3">
@@ -84,7 +55,7 @@ function UsersBox() {
 
         <div className="mt-6 pt-6 border-t border-white/10">
           <button
-            variant="outline"
+            onClick={() => exitRoom()}
             className="w-full border-white/20 hover:bg-white/10 hover:text-red-400 transition-colors bg-black py-2 rounded-xl cursor-pointer"
           >
             Leave Room
