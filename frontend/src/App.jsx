@@ -2,11 +2,18 @@ import React from "react";
 import LandingPage from "./components/home-page/HomePage";
 import Loading from "./components/loading-page/Loading";
 import RoomPage from "./components/room/RoomPage";
+import { Route, Routes } from "react-router-dom";
+import HomePage from "./components/home-page/HomePage";
 
 function App() {
   return (
     <div>
-      <RoomPage/>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/loading" element={<Loading />} />
+        <Route path="/room" element={<RoomPage />} />
+        {/* <Route path="*" element={<NotFound />} /> */}
+      </Routes>
     </div>
   );
 }

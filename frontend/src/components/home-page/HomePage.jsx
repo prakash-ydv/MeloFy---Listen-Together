@@ -1,6 +1,29 @@
 import { MusicIcon, Users, Headphones } from "lucide-react";
+import React, { createElement, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function HomePage() {
+  const navigate = useNavigate();
+  const [roomName, setRoomName] = useState("");
+  const [createUserName, setCreateUserName] = useState("");
+  const [roomCode, setRoomCode] = useState("");
+  const [joinUserName, setJoinUserName] = useState("");
+
+  function createRoom(e) {
+    e.preventDefault();
+    // create room logic
+    setRoomName("");
+    setCreateUserName("");
+    navigate('/loading')
+  }
+  function joinRoom(e) {
+    e.preventDefault();
+    // create room logic
+    setRoomCode("");
+    setJoinUserName("");
+    navigate('/loading')
+  }
+
   return (
     <div className="h-screen bg-gradient-to-br from-purple-900 via-indigo-800 to-black text-white overflow-hidden relative">
       {/* Animated background circles - optimized for viewport */}
@@ -38,23 +61,34 @@ export default function HomePage() {
               <h2 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-indigo-300">
                 Create Room
               </h2>
-              <form className="space-y-2 sm:space-y-3">
+              <form
+                onSubmit={(e) => createRoom(e)}
+                className="space-y-2 sm:space-y-3"
+              >
                 <input
+                  required
+                  value={roomName}
+                  onChange={(e) => setRoomName(e.target.value)}
                   type="text"
                   placeholder="Room Name"
+                  spellCheck={false}
                   className="w-full h-8 sm:h-9 px-2 sm:px-3 bg-white/10 border border-white/20 text-white placeholder:text-white/50 
                   rounded-md focus:border-purple-500 transition-all text-sm sm:text-base"
                 />
                 <input
+                  required
+                  value={createUserName}
+                  onChange={(e) => setCreateUserName(e.target.value)}
                   type="text"
                   placeholder="Your Name"
+                  spellCheck={false}
                   className="w-full h-8 sm:h-9 px-2 sm:px-3 bg-white/10 border border-white/20 text-white placeholder:text-white/50 
                   rounded-md focus:border-purple-500 transition-all text-sm sm:text-base"
                 />
                 <input
                   type="submit"
-                  value="Create Room"
-                  className="w-full h-8 sm:h-9 rounded-md bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 border-none shadow-lg shadow-purple-900/30 text-sm sm:text-base"
+                  value={"Create Room"}
+                  className="w-full h-8 sm:h-9 rounded-md bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 border-none shadow-lg shadow-purple-900/30 text-sm sm:text-base cursor-pointer"
                 />
               </form>
             </div>
@@ -64,23 +98,34 @@ export default function HomePage() {
               <h2 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-indigo-300">
                 Join Room
               </h2>
-              <form className="space-y-2 sm:space-y-3">
+              <form
+                onSubmit={(e) => joinRoom(e)}
+                className="space-y-2 sm:space-y-3"
+              >
                 <input
+                  required
+                  value={roomCode}
+                  onChange={(e) => setRoomCode(e.target.value)}
+                  spellCheck={false}
                   type="text"
                   placeholder="Room Code"
                   className="w-full h-8 sm:h-9 px-2 sm:px-3 bg-white/10 border border-white/20 text-white placeholder:text-white/50 
                   rounded-md focus:border-purple-500 transition-all text-sm sm:text-base"
                 />
                 <input
+                  value={joinUserName}
+                  onChange={(e) => setJoinUserName(e.target.value)}
+                  spellCheck={false}
                   type="text"
                   placeholder="Your Name"
                   className="w-full h-8 sm:h-9 px-2 sm:px-3 bg-white/10 border border-white/20 text-white placeholder:text-white/50 
                   rounded-md focus:border-purple-500 transition-all text-sm sm:text-base"
                 />
+
                 <input
                   type="submit"
-                  value="Join Room"
-                  className="w-full h-8 sm:h-9 rounded-md bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 border-none shadow-lg shadow-purple-900/30 text-sm sm:text-base"
+                  value={"Join Room"}
+                  className="w-full h-8 sm:h-9 rounded-md bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 border-none shadow-lg shadow-purple-900/30 text-sm sm:text-base cursor-pointer"
                 />
               </form>
             </div>
