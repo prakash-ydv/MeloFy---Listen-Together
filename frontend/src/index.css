@@ -1,0 +1,138 @@
+@import "tailwindcss";
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bgClr {
+  background: linear-gradient(to bottom right, #3b0a82, #431f9e, #0a0c3b);
+}
+
+.glow-top-left,
+.glow-bottom-right {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.3;
+  z-index: 0;
+}
+
+.glow-top-left {
+  top: -100px;
+  left: -100px;
+  background: #7c3aed; /* purple glow */
+}
+
+.glow-bottom-right {
+  bottom: -100px;
+  right: -100px;
+  background: #3730a3; /* indigo glow */
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  color: white;
+  padding-top: 100px;
+}
+
+.box {
+  background: linear-gradient(to right, #a855f7, #6366f1);
+  color: white;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* slider */
+
+/* Base slider styles */
+.custom-slider {
+  width: 100%;
+}
+
+/* Track (background) */
+.custom-slider .rc-slider-track {
+  height: 6px;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Rail (inactive part of track) */
+.custom-slider .rc-slider-rail {
+  height: 6px;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Handle (thumb) */
+.custom-slider .rc-slider-handle {
+  height: 16px;
+  width: 16px;
+  border: none;
+  background-color: white;
+  box-shadow: 0 4px 6px -1px rgba(112, 76, 182, 0.5);
+  opacity: 1;
+}
+
+/* Active track portion */
+.custom-slider .rc-slider-track {
+  background: linear-gradient(to right, #a855f7, #4f46e5);
+}
+
+/* Hover states */
+.custom-slider .rc-slider-handle:hover {
+  border-color: #a855f7;
+}
+
+.custom-slider .rc-slider-handle:active {
+  box-shadow: 0 0 5px #a855f7;
+}
+
+
+/* volume slider */
+
+/* Volume Slider Container */
+.volume-slider {
+  width: 7rem; /* w-28 = 7rem */
+}
+
+/* Track (background) */
+.volume-slider .rc-slider-track {
+  height: 0.25rem; /* h-1 = 0.25rem */
+  background-color: rgba(255, 255, 255, 0.2); /* bg-white/20 */
+}
+
+/* Rail (inactive part) */
+.volume-slider .rc-slider-rail {
+  height: 0.25rem;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Handle (thumb) */
+.volume-slider .rc-slider-handle {
+  height: 16px;
+  width: 16px;
+  border: none;
+  background-color: white;
+  box-shadow: 0 4px 6px -1px rgba(112, 76, 182, 0.5);
+  opacity: 1;
+}
+
+/* Active track portion */
+.volume-slider .rc-slider-track {
+  background: linear-gradient(to right, #a855f7, #4f46e5);
+}
+
+/* Hover states */
+.volume-slider .rc-slider-handle:hover {
+  border-color: #a855f7;
+}
+
+.volume-slider .rc-slider-handle:active {
+  box-shadow: 0 0 5px #a855f7;
+}
+
+
