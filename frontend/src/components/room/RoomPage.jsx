@@ -14,13 +14,15 @@ import { ListMusic, Search, Music } from "lucide-react";
 import QueueBox from "./QueueBox";
 import SearchBox from "./SearchBox";
 import UsersBox from "./UsersBox";
+import RoomContext from "../../context/RoomContext";
+import { useContext } from "react";
 
 function RoomPage() {
+  const { disConnectToServer } = useContext(RoomContext);
   const [isPlaying, setisPlaying] = useState(true);
   const [liked, setliked] = useState(false);
   const [isSearchActive, setisSearchActive] = useState(true);
   const [queue, setQueue] = useState([]);
-  
 
   const currentSong = {};
   function togglePlayback() {}

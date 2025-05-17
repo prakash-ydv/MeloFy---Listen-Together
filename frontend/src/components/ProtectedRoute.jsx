@@ -5,7 +5,7 @@ export default function ProtectedRoute({ children }) {
   const roomCode = localStorage.getItem("roomCode");
   const userName = localStorage.getItem("userName");
 
-  if (!roomCode || !userName) return <Navigate to="/" />;
+  if (!roomCode) return <Navigate to="/" />;
 
   return children;
 }

@@ -1,28 +1,36 @@
 import { MusicIcon, Users, Headphones } from "lucide-react";
-import React, { createElement, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import getSearchData from "../../../api/getSearchData";
+import { useRoomContext } from "../../context/RoomContext";
 
 export default function HomePage() {
+  const {
+    roomName,
+    setRoomName,
+    userName,
+    setUserName,
+    createRoom,
+    connectToServer,
+  } = useRoomContext();
+
   const navigate = useNavigate();
-  const [roomName, setRoomName] = useState("");
   const [createUserName, setCreateUserName] = useState("");
   const [roomCode, setRoomCode] = useState("");
   const [joinUserName, setJoinUserName] = useState("");
 
-  function createRoom(e) {
-    e.preventDefault();
-    // create room logic
-    setRoomName("");
-    setCreateUserName("");
-    navigate('/loading')
-  }
-  function joinRoom(e) {
-    e.preventDefault();
-    // create room logic
-    setRoomCode("");
-    setJoinUserName("");
-    navigate('/loading')
-  }
+  useEffect(() => {
+    localStorage.setItem("roomCode", "");
+    connectToServer();
+  }, []);
+
+  // function joinRoom(e) {
+  //   e.preventDefault();
+  //   // create room logic
+  //   setRoomCode("");
+  //   setJoinUserName("");
+  //   navigate("/loading");
+  // }
 
   return (
     <div className="h-screen bg-gradient-to-br from-purple-900 via-indigo-800 to-black text-white overflow-hidden relative">
@@ -77,8 +85,8 @@ export default function HomePage() {
                 />
                 <input
                   required
-                  value={createUserName}
-                  onChange={(e) => setCreateUserName(e.target.value)}
+                  value={userName}
+                  onChange={(e) => setUserName(e.target.value)}
                   type="text"
                   placeholder="Your Name"
                   spellCheck={false}

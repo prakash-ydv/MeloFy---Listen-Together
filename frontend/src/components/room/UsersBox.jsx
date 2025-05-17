@@ -1,6 +1,7 @@
 import React from "react";
 import { Users, Badge, Mic2, UserRound } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import RoomContext from "../../context/RoomContext";
 
 const mockUsers = [
   {
@@ -12,12 +13,9 @@ const mockUsers = [
 ];
 
 function UsersBox() {
-  const Navigate = useNavigate()
-  
-  function exitRoom() {
-    // lofic here
-    Navigate("/");
-  }
+  const { disConnectToServer } = useContext(RoomContext);
+
+
   return (
     <div>
       {/* Sidebar - Users in room */}
@@ -55,7 +53,7 @@ function UsersBox() {
 
         <div className="mt-6 pt-6 border-t border-white/10">
           <button
-            onClick={() => exitRoom()}
+            onClick={() => disConnectToServer()}
             className="w-full border-white/20 hover:bg-white/10 hover:text-red-400 transition-colors bg-black py-2 rounded-xl cursor-pointer"
           >
             Leave Room
