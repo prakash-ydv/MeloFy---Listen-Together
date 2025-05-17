@@ -17,6 +17,8 @@ export const RoomContextProvider = ({ children }) => {
   const [roomId, setRoomId] = useState("");
   const [roomName, setRoomName] = useState("");
   const [userName, setUserName] = useState("");
+  const [isConnectionMade, setIsConnectionMade] = useState(false);
+  const [members, setMembers] = useState(null);
 
   const socket = useRef(null);
 
@@ -25,21 +27,22 @@ export const RoomContextProvider = ({ children }) => {
     socket.current.on("room-created", (data) => {
       let roomID = data.roomId;
       setRoomId(roomID);
+      setRoomName(data.roomName);
+      setMembers(data.members);
+      console.log(data.members);
       localStorage.setItem("roomCode", data.roomId);
       console.log("roomCode saved to localstorage");
     });
 
-    return () => {
-      if (socket.current) {
-        socket.current.disconnect();
-      }
-    };
-  }, []);
+    return () => {};
+  }, [isConnectionMade]);
 
   function connectToServer() {
     if (!socket.current) {
       socket.current = io("http://localhost:3000/");
       console.log("Connected to server...");
+
+      setIsConnectionMade(true);
     }
   }
   function disConnectToServer() {
@@ -70,6 +73,7 @@ export const RoomContextProvider = ({ children }) => {
         setRoomName,
         userName,
         setUserName,
+        members,
         createRoom,
         connectToServer,
         disConnectToServer,

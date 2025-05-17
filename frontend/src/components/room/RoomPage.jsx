@@ -17,9 +17,12 @@ import UsersBox from "./UsersBox";
 import RoomContext from "../../context/RoomContext";
 import { useContext } from "react";
 
+
+
 function RoomPage() {
+  const {roomName} = useContext(RoomContext)
   const { disConnectToServer } = useContext(RoomContext);
-  const [isPlaying, setisPlaying] = useState(true);
+  const [isPlaying, setisPlaying] = useState(false);
   const [liked, setliked] = useState(false);
   const [isSearchActive, setisSearchActive] = useState(true);
   const [queue, setQueue] = useState([]);

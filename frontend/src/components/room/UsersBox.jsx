@@ -1,20 +1,11 @@
 import React from "react";
 import { Users, Badge, Mic2, UserRound } from "lucide-react";
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import RoomContext from "../../context/RoomContext";
 
-const mockUsers = [
-  {
-    id: 1,
-    name: "Alex",
-    isHost: true,
-    avatar: "/placeholder.svg?height=40&width=40",
-  },
-];
-
 function UsersBox() {
-  const { disConnectToServer } = useContext(RoomContext);
-
+  const { disConnectToServer, members } = useContext(RoomContext);
+ 
 
   return (
     <div>
@@ -28,7 +19,7 @@ function UsersBox() {
         </div>
 
         <div className="space-y-3">
-          {mockUsers.map((user) => (
+          {members?.map((user) => (
             <div
               key={user.id}
               className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/10 transition-colors border border-transparent hover:border-white/20"
@@ -38,7 +29,7 @@ function UsersBox() {
               </div>
               <div className="flex-1">
                 <div className="flex items-center gap-2 ">
-                  <span className="font-medium">{user.name}</span>
+                  <span className="font-medium">{user.userName}</span>
                   {user.isHost && (
                     <span className="text-xs bg-gradient-to-br from-purple-900 to-indigo-800  px-2  rounded-2xl">
                       Host

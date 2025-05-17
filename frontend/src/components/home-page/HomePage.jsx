@@ -24,13 +24,7 @@ export default function HomePage() {
     connectToServer();
   }, []);
 
-  // function joinRoom(e) {
-  //   e.preventDefault();
-  //   // create room logic
-  //   setRoomCode("");
-  //   setJoinUserName("");
-  //   navigate("/loading");
-  // }
+  
 
   return (
     <div className="h-screen bg-gradient-to-br from-purple-900 via-indigo-800 to-black text-white overflow-hidden relative">

@@ -12,8 +12,8 @@ function SearchBox() {
           <input
             type="text"
             placeholder="Search for songs..."
-            value={""}
-            onChange={""}
+            // value={""}
+            // onChange={""}
             className="w-full h-8 pl-10 bg-white/10 text-white placeholder:text-white/50 focus:border-purple-500 transition-all rounded-l-2xl outline-none focus:outline-none"
           />
           <input className="bg-black cursor-pointer py-1 px-2 rounded-r-xl" type="submit"value={"Search"} />
