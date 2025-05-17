@@ -8,7 +8,7 @@ function RoomNav(props) {
   const [listners, setListners] = useState(0);
 
   useEffect(() => {
-    setListners(members.length);
+    setListners(members?.length);
 
     return () => {
       setListners(0);

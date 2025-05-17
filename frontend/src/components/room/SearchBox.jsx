@@ -40,36 +40,45 @@ function SearchBox() {
       </div>
 
       <section className="h-[300px] w-full pr-4">
-        <div className="space-y-2">
+        <div className="space-y-2 ">
           {searchResults.length > 0 && setIsFetched ? (
-            searchResults.map((song, index) =>
-
-              <div
-                key={index}
-                className="flex w-full items-center gap-3 p-3 rounded-lg hover:bg-white/10 transition-colors border border-transparent hover:border-white/20 group"
-              >
-                <div className="relative flex gap-1  w-full ">
-                  <img
-                    src={song.snippet.thumbnails.medium.url || "/placeholder.svg"}
-                    alt={song.title}
-                    className=" h-12 rounded shadow-md transition-transform group-hover:scale-105"
-                  />
-                  <div className="absolute w-21 inset-0 flex items-center justify-center bg-black/60 opacity-0 group-hover:opacity-100 rounded transition-opacity">
-                    <Play className="h-6 w-6 text-white" />
+            searchResults.map((song, index) => (
+              <>
+                <div className="flex w-full justify-between items-center">
+                  <div
+                    key={index}
+                    className=" flex w-full  items-center gap-5 p-3 rounded-lg hover:bg-white/10 transition-colors border border-transparent hover:border-white/20 group"
+                  >
+                    <div className="relative flex gap-1 min-w-5 sm:min-w-32">
+                      <img
+                        src={
+                          song.snippet.thumbnails.medium.url ||
+                          "/placeholder.svg"
+                        }
+                        alt={song.title}
+                        className=" h-12 rounded shadow-md transition-transform group-hover:scale-105"
+                      />
+                      <div className="absolute w-21 inset-0 flex items-center justify-center bg-black/60 opacity-0 group-hover:opacity-100 rounded transition-opacity">
+                        <Play className="h-6 w-6 text-white" />
+                      </div>
+                    </div>
+                    <div className="flex max-w-50 sm:max-w-70">
+                      <h4 className="font-medium truncate">
+                        {song.snippet.title}
+                      </h4>
+                    </div>
                   </div>
-                </div>
-                <div className="flex-1 max-w-95">
-                  <h4 className="font-medium truncate">{song.snippet.title}</h4>
-                </div>
 
-                <button
-                  className="h-8 w-8 bg-purple-600/20 opacity-100 group-hover:opacity-100 transition-opacity"
-                  onClick={() => addToQueue(song)}
-                >
-                  <Plus className="h-4 w-4" />
-                </button>
-              </div>
-            )
+                  <button
+                  title="add to queue"
+                    className="h-8 w-8 center rounded-full bg-purple-600/20 opacity-100 cursor-pointer hover:bg-purple-600 transition-colors duration-300"
+                    onClick={() => addToQueue(song)}
+                  >
+                    <Plus className="h-4 w-4" />
+                  </button>
+                </div>
+              </>
+            ))
           ) : (
             <div className="text-center py-8 text-white/50 flex flex-col items-center">
               <Search className="h-12 w-12 mb-4 text-white/20" />

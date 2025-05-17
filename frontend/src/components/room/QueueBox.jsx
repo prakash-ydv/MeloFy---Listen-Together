@@ -4,7 +4,7 @@ import { Music } from "lucide-react";
 function QueueBox(props) {
   const { queue } = props;
   return (
-    <div className="w-full p-5 flex flex-col">
+    <div className="w-full px-5 py-3 flex flex-col">
       <h3 className="text-lg font-semibold mb-4 flex items-center">
         <Music className="h-4 w-4 mr-2 text-purple-400" />
         Up Next
