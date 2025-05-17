@@ -90,7 +90,7 @@ io.on("connection", (socket) => {
 
   socket.on("disconnect", () => {
     console.log(socket.id, "Disconnected");
-    // Optional: remove user from rooms if needed
+
   });
 });
 
