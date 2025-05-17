@@ -1,15 +1,17 @@
 import axios from "axios";
-let api_key = "AIzaSyD5-Ws019HoH0Cd_9ad-VWHDtMGQAxyZCA"
 
-function getSearchData(query) {
-  axios
-    .get(`https://www.googleapis.com/youtube/v3/search?key=${api_key}&q=${query}&part=snippet&type=video&maxResults=5`)
-    .then((response) => {
-      console.log(response.data);
-    })
-    .catch((error) => {
-      console.error("Error fetching data:", error); // handle error
-    });
+const API_KEY = "AIzaSyD5-Ws019HoH0Cd_9ad-VWHDtMGQAxyZCA";
+
+async function getSearchData(query) {
+  try {
+    const response = await axios.get(
+      `https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&q=${query}&part=snippet&type=video&maxResults=4`
+    );
+    return response.data; 
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return null; // optional: return null to handle gracefully
+  }
 }
 
 export default getSearchData;

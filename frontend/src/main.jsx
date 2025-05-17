@@ -3,11 +3,14 @@ import { BrowserRouter } from "react-router-dom";
 import "./index.css";
 import App from "./App.jsx";
 import { RoomContextProvider } from "./context/RoomContext.jsx";
+import { PlayerContextProvider } from "./context/PlayerContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <RoomContextProvider>
-      <App />
+      <PlayerContextProvider>
+        <App />
+      </PlayerContextProvider>
     </RoomContextProvider>
   </BrowserRouter>
 );

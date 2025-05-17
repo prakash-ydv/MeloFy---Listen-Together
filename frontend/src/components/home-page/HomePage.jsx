@@ -2,6 +2,7 @@ import { MusicIcon, Users, Headphones } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRoomContext } from "../../context/RoomContext";
+import getSearchData from "../../../api/getSearchData";
 
 export default function HomePage() {
   const {
@@ -24,6 +25,7 @@ export default function HomePage() {
     localStorage.setItem("roomCode", "");
     connectToServer();
   }, []);
+  
 
   return (
     <div className="h-screen bg-gradient-to-br from-purple-900 via-indigo-800 to-black text-white overflow-hidden relative">
