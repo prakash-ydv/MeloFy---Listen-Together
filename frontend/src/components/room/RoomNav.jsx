@@ -13,7 +13,7 @@ function RoomNav(props) {
     return () => {
       setListners(0);
     };
-  }, []);
+  }, [members]);
 
   return (
     <nav className="max-w-6xl mb-6 flex items-center justify-between w-full ">

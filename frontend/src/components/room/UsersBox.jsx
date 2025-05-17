@@ -21,7 +21,7 @@ function UsersBox() {
         <div className="space-y-3">
           {members?.map((user) => (
             <div
-              key={user.id}
+              key={user.userId}
               className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/10 transition-colors border border-transparent hover:border-white/20"
             >
               <div className="center border-2 border-purple-500 group-hover:border-purple-500 transition-colors h-10 w-10 rounded-full ">

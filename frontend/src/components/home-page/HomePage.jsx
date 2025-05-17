@@ -1,7 +1,6 @@
 import { MusicIcon, Users, Headphones } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import getSearchData from "../../../api/getSearchData";
 import { useRoomContext } from "../../context/RoomContext";
 
 export default function HomePage() {
@@ -10,21 +9,21 @@ export default function HomePage() {
     setRoomName,
     userName,
     setUserName,
+    joinUserName,
+    setJoinUserName,
+    joinRoomCode,
+    setJoinRoomCode,
     createRoom,
+    joinRoom,
     connectToServer,
   } = useRoomContext();
 
   const navigate = useNavigate();
-  const [createUserName, setCreateUserName] = useState("");
-  const [roomCode, setRoomCode] = useState("");
-  const [joinUserName, setJoinUserName] = useState("");
 
   useEffect(() => {
     localStorage.setItem("roomCode", "");
     connectToServer();
   }, []);
-
-  
 
   return (
     <div className="h-screen bg-gradient-to-br from-purple-900 via-indigo-800 to-black text-white overflow-hidden relative">
@@ -64,6 +63,7 @@ export default function HomePage() {
                 Create Room
               </h2>
               <form
+                id="create-room"
                 onSubmit={(e) => createRoom(e)}
                 className="space-y-2 sm:space-y-3"
               >
@@ -101,15 +101,21 @@ export default function HomePage() {
                 Join Room
               </h2>
               <form
+                id="join-room"
                 onSubmit={(e) => joinRoom(e)}
                 className="space-y-2 sm:space-y-3"
               >
                 <input
                   required
-                  value={roomCode}
-                  onChange={(e) => setRoomCode(e.target.value)}
+                  value={joinRoomCode}
+                  onInput={(e) => {
+                    if (e.target.value.length > 5) {
+                      e.target.value = e.target.value.slice(0, 5);
+                    }
+                  }}
+                  onChange={(e) => setJoinRoomCode(e.target.value)}
                   spellCheck={false}
-                  type="text"
+                  type="number"
                   placeholder="Room Code"
                   className="w-full h-8 sm:h-9 px-2 sm:px-3 bg-white/10 border border-white/20 text-white placeholder:text-white/50 
                   rounded-md focus:border-purple-500 transition-all text-sm sm:text-base"
