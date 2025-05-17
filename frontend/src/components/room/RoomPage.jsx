@@ -16,6 +16,7 @@ import SearchBox from "./SearchBox";
 import UsersBox from "./UsersBox";
 import RoomContext from "../../context/RoomContext";
 import { useContext } from "react";
+import music_banner from "../../assets/music-banner.jpg"
 
 
 
@@ -65,9 +66,9 @@ function RoomPage() {
                 <div className="w-full md:w-auto relative group">
                   <div className="absolute inset-0 bg-purple-500/20 rounded-lg blur-md opacity-0 group-hover:opacity-100 transition-opacity"></div>
                   <img
-                    src={currentSong.cover || "/placeholder.svg"}
+                    src={currentSong.cover || music_banner}
                     alt={currentSong.title}
-                    className="w-full md:w-48 h-48 object-cover rounded-lg shadow-lg relative z-10 transition-transform group-hover:scale-105"
+                    className="w-full md:w-48 h-48 object-cover  object-left rounded-lg shadow-lg relative z-10 transition-transform group-hover:scale-105"
                   />
                   {isPlaying && (
                     <div className="absolute bottom-2 right-2 bg-black/60 rounded-full p-1 z-20">
