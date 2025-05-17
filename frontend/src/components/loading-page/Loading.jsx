@@ -5,17 +5,7 @@ import { useNavigate } from "react-router-dom";
 export default function Loading() {
   const { socket, setRoomId, roomId, createRoom } = useContext(RoomContext);
   const navigate = useNavigate();
-  const [isConnectionMade, setIsConnectionMade] = useState(false);
 
-  useEffect(() => {
-    socket.current.on("room-created", (data) => {
-      let roomID = data.roomId;
-      setRoomId(roomID);
-      localStorage.setItem("roomCode", data.roomId);
-      setIsConnectionMade(true);
-      console.log("roomCode saved to localstorage");
-    });
-  }, [createRoom]);
 
   useEffect(() => {
     if (!localStorage.getItem("roomCode")) {
@@ -25,7 +15,7 @@ export default function Loading() {
     }
 
     return () => {};
-  }, [roomId, createRoom, isConnectionMade]);
+  }, [roomId, createRoom]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-900 via-indigo-800 to-black flex items-center justify-center">

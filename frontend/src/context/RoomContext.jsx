@@ -21,8 +21,16 @@ export const RoomContextProvider = ({ children }) => {
   const socket = useRef(null);
 
   useEffect(() => {
+    if (!socket.current) return;
+    socket.current.on("room-created", (data) => {
+      let roomID = data.roomId;
+      setRoomId(roomID);
+      localStorage.setItem("roomCode", data.roomId);
+      console.log("roomCode saved to localstorage");
+    });
+
     return () => {
-      if(socket.current){
+      if (socket.current) {
         socket.current.disconnect();
       }
     };
@@ -31,6 +39,7 @@ export const RoomContextProvider = ({ children }) => {
   function connectToServer() {
     if (!socket.current) {
       socket.current = io("http://localhost:3000/");
+      console.log("Connected to server...");
     }
   }
   function disConnectToServer() {
@@ -38,13 +47,14 @@ export const RoomContextProvider = ({ children }) => {
       return;
     } else {
       socket.current.disconnect();
-      localStorage.setItem('roomCode' , "")
+      localStorage.setItem("roomCode", "");
       navigate("/");
     }
   }
 
   function createRoom(e) {
     e.preventDefault();
+    if (!socket.current) connectToServer();
     socket.current.emit("create-room-request", { roomName, userName });
     setRoomName("");
     setUserName("");
