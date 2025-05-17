@@ -146,7 +146,7 @@ function RoomPage() {
             </div>
 
             {/* queue and search box */}
-            <div className="bg-black/40 backdrop-blur-md rounded-xl p-6 mb-6 border border-white/10 shadow-xl">
+            <div className="bg-black/40 backdrop-blur-md rounded-xl p-6 border border-white/10 shadow-xl">
               {/* queue and search button */}
               <div className="center bg-[#190e36] p-2 rounded-2xl text-zinc-400">
                 <button

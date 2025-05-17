@@ -48,7 +48,9 @@ export const RoomContextProvider = ({ children }) => {
       setMembers(members);
     });
 
-    return () => {};
+    return () => {
+      
+    };
   }, [isConnectionMade]);
 
   function connectToServer() {
