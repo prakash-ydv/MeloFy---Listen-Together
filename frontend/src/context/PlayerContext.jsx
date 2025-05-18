@@ -7,13 +7,42 @@ import React, {
 } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useRoomContext } from "./RoomContext";
 
-// 1. Create the context
 const PlayerContext = createContext();
 
-// 2. Create the provider component
 export const PlayerContextProvider = ({ children }) => {
+  const { socket, roomId, queueWhenJoined } = useRoomContext();
   const [queue, setQueue] = useState([]);
+
+  useEffect(() => {
+    setQueue(queueWhenJoined);
+  }, [queueWhenJoined]);
+
+  useEffect(() => {
+    if (!socket.current) return;
+
+    const socketInstance = socket.current;
+
+    const handleQueueUpdate = (data) => {
+      setQueue(data.queue || []);
+    };
+
+    socketInstance.on("song-queue-updated", handleQueueUpdate);
+
+    return () => {
+      socketInstance.off("song-queue-updated", handleQueueUpdate);
+    };
+  }, [socket]);
+
+  const requestQueueUpdateToServer = (newQueue) => {
+    if (!socket.current || !roomId) return;
+    console.log("Sending queue update to server:", newQueue);
+    socket.current.emit("request-to-update-queue", {
+      roomId,
+      queue: newQueue,
+    });
+  };
 
   const toastAddedToQueue = () => {
     toast.success("🎵 Song added to queue!", {
@@ -35,28 +64,28 @@ export const PlayerContextProvider = ({ children }) => {
     });
   };
 
-  function addToQueue(song) {
-    console.log(song);
-    let newQueue = [...queue];
-    newQueue.push(song);
+  const addToQueue = (song) => {
+    const newQueue = [...queue, song];
     setQueue(newQueue);
     toastAddedToQueue();
-  }
+    requestQueueUpdateToServer(newQueue);
+  };
 
-  function removeFromQueue(song_title) {
+  const removeFromQueue = (song_title) => {
     const newQueue = queue.filter((song) => song.snippet.title !== song_title);
     setQueue(newQueue);
     toastRemovedFromQueue();
-  }
+    requestQueueUpdateToServer(newQueue);
+  };
+
   return (
-    <PlayerContext.Provider value={{ queue, addToQueue, removeFromQueue }}>
+    <PlayerContext.Provider
+      value={{ queue, addToQueue, removeFromQueue, setQueue }}
+    >
       {children}
     </PlayerContext.Provider>
   );
 };
 
-// 3. Optional: Custom hook to use RoomContext
 export const usePlayerContext = () => useContext(PlayerContext);
-
-// 4. Export the context (fixed typo in name)
 export default PlayerContext;

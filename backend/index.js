@@ -35,7 +35,7 @@ io.on("connection", (socket) => {
         currentDuration: "",
         isPaused: false,
       },
-      songQueue: [{ songID: "", songName: " " }],
+      songQueue: [],
       members: [],
     };
 
@@ -78,6 +78,7 @@ io.on("connection", (socket) => {
       socket.emit("added-to-room", {
         roomId: roomCode,
         roomName: room.roomDetails.roomName,
+        queue: room.songQueue,
         members: room.members,
       });
       io.to(roomCode).emit("sync-members", room.members);
@@ -88,9 +89,23 @@ io.on("connection", (socket) => {
     }
   });
 
+  socket.on("request-to-update-queue", (data) => {
+    const { roomId, queue } = data;
+    const room = rooms[roomId];
+
+    if (room) {
+      // Validate queue is an array
+      if (Array.isArray(queue)) {
+        room.songQueue = queue;
+        io.to(roomId).emit("song-queue-updated", { queue: room.songQueue });
+      } else {
+        console.error("Invalid queue data received:", queue);
+      }
+    }
+  });
+
   socket.on("disconnect", () => {
     console.log(socket.id, "Disconnected");
-
   });
 });
 

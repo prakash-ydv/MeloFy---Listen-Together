@@ -21,6 +21,7 @@ export const RoomContextProvider = ({ children }) => {
   const [joinRoomCode, setJoinRoomCode] = useState("");
   const [isConnectionMade, setIsConnectionMade] = useState(false);
   const [members, setMembers] = useState(null);
+  const [queueWhenJoined, setQueueWhenJoined] = useState([]);
 
   const socket = useRef(null);
 
@@ -40,6 +41,7 @@ export const RoomContextProvider = ({ children }) => {
     socket.current.on("added-to-room", (data) => {
       setRoomName(data.roomName);
       setMembers(data.members);
+      setQueueWhenJoined(data.queue);
       navigate("/room");
       localStorage.setItem("roomCode", data.roomId);
     });
@@ -48,9 +50,7 @@ export const RoomContextProvider = ({ children }) => {
       setMembers(members);
     });
 
-    return () => {
-      
-    };
+    return () => {};
   }, [isConnectionMade]);
 
   function connectToServer() {
@@ -106,6 +106,7 @@ export const RoomContextProvider = ({ children }) => {
         setJoinRoomCode,
         setJoinUserName,
         joinRoom,
+        queueWhenJoined,
         members,
         createRoom,
         connectToServer,

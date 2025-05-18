@@ -46,11 +46,11 @@ function SearchBox() {
           {searchResults.length > 0 && setIsFetched ? (
             searchResults.map((song, index) => (
               <>
-                <div className="flex w-full justify-between items-center">
-                  <div
-                    key={index}
-                    className=" flex w-full  items-center gap-5 p-3 rounded-lg hover:bg-white/10 transition-colors border border-transparent hover:border-white/20 group"
-                  >
+                <div
+                  key={index}
+                  className="flex w-full justify-between items-center"
+                >
+                  <div className=" flex w-full  items-center gap-5 p-3 rounded-lg hover:bg-white/10 transition-colors border border-transparent hover:border-white/20 group">
                     <div className="relative flex gap-1 min-w-5 sm:min-w-32">
                       <img
                         src={

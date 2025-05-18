@@ -25,7 +25,7 @@ function RoomPage() {
   const { disConnectToServer } = useContext(RoomContext);
   const [isPlaying, setisPlaying] = useState(false);
   const [liked, setliked] = useState(false);
-  const [isSearchActive, setisSearchActive] = useState(true);
+  const [isSearchActive, setisSearchActive] = useState(false);
   const [queue, setQueue] = useState([]);
 
   const currentSong = {};
