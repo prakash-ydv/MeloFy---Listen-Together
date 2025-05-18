@@ -14,6 +14,7 @@ const PlayerContext = createContext();
 export const PlayerContextProvider = ({ children }) => {
   const { socket, roomId, queueWhenJoined } = useRoomContext();
   const [queue, setQueue] = useState([]);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
     setQueue(queueWhenJoined);
@@ -28,10 +29,23 @@ export const PlayerContextProvider = ({ children }) => {
       setQueue(data.queue || []);
     };
 
+    const handlePlay = () => {
+      console.log("Play event recieved");
+      setIsPlaying(true);
+    };
+    const handlePause = () => {
+      console.log("Pause event recieved");
+      setIsPlaying(false);
+    };
+
     socketInstance.on("song-queue-updated", handleQueueUpdate);
+    socketInstance.on("play", handlePlay);
+    socketInstance.on("pause", handlePause);
 
     return () => {
       socketInstance.off("song-queue-updated", handleQueueUpdate);
+      socketInstance.off("play", handlePlay);
+      socketInstance.off("pause", handlePause);
     };
   }, [socket]);
 
@@ -78,9 +92,34 @@ export const PlayerContextProvider = ({ children }) => {
     requestQueueUpdateToServer(newQueue);
   };
 
+  const playTheSong = () => {
+    setIsPlaying(true);
+    socket.current.emit("start-music", roomId);
+  };
+
+  const toggleIsPlaying = () => {
+    console.log("toggle button clicked");
+    if (isPlaying) {
+      console.log("pause the song");
+      socket.current.emit("stop-music", roomId);
+      setIsPlaying(false);
+    } else {
+      console.log("play the song");
+      playTheSong();
+    }
+  };
+
   return (
     <PlayerContext.Provider
-      value={{ queue, addToQueue, removeFromQueue, setQueue }}
+      value={{
+        queue,
+        addToQueue,
+        removeFromQueue,
+        setQueue,
+        isPlaying,
+        setIsPlaying,
+        toggleIsPlaying,
+      }}
     >
       {children}
     </PlayerContext.Provider>

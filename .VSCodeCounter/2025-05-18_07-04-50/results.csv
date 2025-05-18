@@ -1,0 +1,30 @@
+"filename", "language", "JavaScript JSX", "PostCSS", "JavaScript", "HTML", "JSON", "Markdown", "XML", "Properties", "comment", "blank", "total"
+"d:\Projects\MeloFy - Listen Together\backend\index.js", "JavaScript", 0, 0, 92, 0, 0, 0, 0, 0, 5, 22, 119
+"d:\Projects\MeloFy - Listen Together\backend\package-lock.json", "JSON", 0, 0, 0, 0, 1326, 0, 0, 0, 0, 1, 1327
+"d:\Projects\MeloFy - Listen Together\backend\package.json", "JSON", 0, 0, 0, 0, 18, 0, 0, 0, 0, 1, 19
+"d:\Projects\MeloFy - Listen Together\frontend\.env", "Properties", 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1
+"d:\Projects\MeloFy - Listen Together\frontend\README.md", "Markdown", 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1
+"d:\Projects\MeloFy - Listen Together\frontend\api\getSearchData.js", "JavaScript", 0, 0, 14, 0, 0, 0, 0, 0, 0, 4, 18
+"d:\Projects\MeloFy - Listen Together\frontend\eslint.config.js", "JavaScript", 0, 0, 32, 0, 0, 0, 0, 0, 0, 2, 34
+"d:\Projects\MeloFy - Listen Together\frontend\index.html", "HTML", 0, 0, 0, 13, 0, 0, 0, 0, 0, 1, 14
+"d:\Projects\MeloFy - Listen Together\frontend\package-lock.json", "JSON", 0, 0, 0, 0, 4461, 0, 0, 0, 0, 1, 4462
+"d:\Projects\MeloFy - Listen Together\frontend\package.json", "JSON", 0, 0, 0, 0, 38, 0, 0, 0, 0, 1, 39
+"d:\Projects\MeloFy - Listen Together\frontend\public\vite.svg", "XML", 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1
+"d:\Projects\MeloFy - Listen Together\frontend\src\App.css", "PostCSS", 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1
+"d:\Projects\MeloFy - Listen Together\frontend\src\App.jsx", "JavaScript JSX", 26, 0, 0, 0, 0, 0, 0, 0, 1, 3, 30
+"d:\Projects\MeloFy - Listen Together\frontend\src\assets\react.svg", "XML", 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1
+"d:\Projects\MeloFy - Listen Together\frontend\src\components\ProtectedRoute.jsx", "JavaScript JSX", 7, 0, 0, 0, 0, 0, 0, 0, 1, 4, 12
+"d:\Projects\MeloFy - Listen Together\frontend\src\components\home-page\HomePage.jsx", "JavaScript JSX", 137, 0, 0, 0, 0, 0, 0, 0, 6, 11, 154
+"d:\Projects\MeloFy - Listen Together\frontend\src\components\loading-page\Loading.jsx", "JavaScript JSX", 26, 0, 0, 0, 0, 0, 0, 0, 0, 6, 32
+"d:\Projects\MeloFy - Listen Together\frontend\src\components\room\QueueBox.jsx", "JavaScript JSX", 44, 0, 0, 0, 0, 0, 0, 0, 0, 4, 48
+"d:\Projects\MeloFy - Listen Together\frontend\src\components\room\RoomNav.jsx", "JavaScript JSX", 40, 0, 0, 0, 0, 0, 0, 0, 0, 7, 47
+"d:\Projects\MeloFy - Listen Together\frontend\src\components\room\RoomPage.jsx", "JavaScript JSX", 168, 0, 0, 0, 0, 0, 0, 0, 7, 15, 190
+"d:\Projects\MeloFy - Listen Together\frontend\src\components\room\SearchBox.jsx", "JavaScript JSX", 89, 0, 0, 0, 0, 0, 0, 0, 0, 8, 97
+"d:\Projects\MeloFy - Listen Together\frontend\src\components\room\UsersBox.jsx", "JavaScript JSX", 51, 0, 0, 0, 0, 0, 0, 0, 1, 7, 59
+"d:\Projects\MeloFy - Listen Together\frontend\src\components\room\page.jsx", "JavaScript JSX", 447, 0, 0, 0, 0, 0, 0, 0, 18, 40, 505
+"d:\Projects\MeloFy - Listen Together\frontend\src\context\PlayerContext.jsx", "JavaScript JSX", 76, 0, 0, 0, 0, 0, 0, 0, 0, 16, 92
+"d:\Projects\MeloFy - Listen Together\frontend\src\context\RoomContext.jsx", "JavaScript JSX", 108, 0, 0, 0, 0, 0, 0, 0, 4, 15, 127
+"d:\Projects\MeloFy - Listen Together\frontend\src\index.css", "PostCSS", 0, 106, 0, 0, 0, 0, 0, 0, 17, 29, 152
+"d:\Projects\MeloFy - Listen Together\frontend\src\main.jsx", "JavaScript JSX", 18, 0, 0, 0, 0, 0, 0, 0, 0, 3, 21
+"d:\Projects\MeloFy - Listen Together\frontend\vite.config.js", "JavaScript", 0, 0, 6, 0, 0, 0, 0, 0, 1, 1, 8
+"Total", "-", 1237, 106, 144, 13, 5843, 1, 2, 1, 61, 203, 7611

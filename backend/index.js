@@ -104,6 +104,26 @@ io.on("connection", (socket) => {
     }
   });
 
+  socket.on("start-music", (roomId) => {
+    const room = rooms[roomId];
+
+    if (room) {
+      room.currentSong.isPaused = false;
+      console.log("play event sent")
+      io.to(roomId).emit("play"); 
+    }
+  });
+
+  socket.on("stop-music", (roomId) => {
+    const room = rooms[roomId];
+
+    if (room) {
+      room.currentSong.isPaused = true;
+      console.log("pause event sent")
+      io.to(roomId).emit("pause"); 
+    }
+  });
+
   socket.on("disconnect", () => {
     console.log(socket.id, "Disconnected");
   });

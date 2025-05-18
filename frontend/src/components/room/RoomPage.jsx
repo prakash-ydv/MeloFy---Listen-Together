@@ -16,14 +16,15 @@ import SearchBox from "./SearchBox";
 import UsersBox from "./UsersBox";
 import RoomContext from "../../context/RoomContext";
 import { useContext } from "react";
-import music_banner from "../../assets/music-banner.jpg"
-
+import music_banner from "../../assets/music-banner.jpg";
+import YoutubePlayer from "../YoutubePlayer";
+import { usePlayerContext } from "../../context/PlayerContext";
 
 
 function RoomPage() {
-  const {roomName} = useContext(RoomContext)
+  const {isPlaying, toggleIsPlaying} = usePlayerContext()
+  const { roomName } = useContext(RoomContext);
   const { disConnectToServer } = useContext(RoomContext);
-  const [isPlaying, setisPlaying] = useState(false);
   const [liked, setliked] = useState(false);
   const [isSearchActive, setisSearchActive] = useState(false);
   const [queue, setQueue] = useState([]);
@@ -34,9 +35,7 @@ function RoomPage() {
     if (!isSearchActive) return;
     setisSearchActive(false);
   }
-  function toggleIsPlaying() {
-    setisPlaying((prev) => !prev);
-  }
+  
   function toggleQueueToSearch() {
     if (isSearchActive) return;
     setisSearchActive(true);
@@ -47,6 +46,7 @@ function RoomPage() {
 
   return (
     <div className="min-h-screen p-5 lg:p-10 bg-gradient-to-br from-purple-900 via-indigo-800 to-black text-white overflow-hidden relative">
+      <YoutubePlayer videoId={"97xf5DXyXqg"} />
       {/* Animated background elements */}
       <div className="absolute top-20 left-20 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
       <div
@@ -117,7 +117,7 @@ function RoomPage() {
                       <SkipBack className="h-6 w-6" />
                     </button>
                     <button
-                      onClick={toggleIsPlaying}
+                      onClick={()=> toggleIsPlaying()}
                       className="center bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 h-14 w-14 rounded-full shadow-lg shadow-purple-900/30 transition-transform hover:scale-105"
                     >
                       {isPlaying ? (
