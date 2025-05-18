@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Search, Play, Plus } from "lucide-react";
 import getSearchData from "../../../api/getSearchData";
+import { usePlayerContext } from "../../context/PlayerContext";
 
 function SearchBox() {
+  const { addToQueue } = usePlayerContext();
   const [searchResults, setSearchResults] = useState({});
   const [searchQuery, setSearchQuery] = useState("");
   const [isFetched, setIsFetched] = useState(false);
@@ -70,7 +72,7 @@ function SearchBox() {
                   </div>
 
                   <button
-                  title="add to queue"
+                    title="add to queue"
                     className="h-8 w-8 center rounded-full bg-purple-600/20 opacity-100 cursor-pointer hover:bg-purple-600 transition-colors duration-300"
                     onClick={() => addToQueue(song)}
                   >
