@@ -40,6 +40,7 @@ export const RoomContextProvider = ({ children }) => {
 
     socket.current.on("added-to-room", (data) => {
       setRoomName(data.roomName);
+      setRoomId(data.roomId);
       setMembers(data.members);
       setQueueWhenJoined(data.queue);
       navigate("/room");
@@ -47,10 +48,14 @@ export const RoomContextProvider = ({ children }) => {
     });
 
     socket.current.on("sync-members", (members) => {
-      setMembers(members);
+      setMembers(() => members);
     });
 
-    return () => {};
+    return () => {
+      socket.current.off("room-created");
+      socket.current.off("added-to-room");
+      socket.current.off("sync-members");
+    };
   }, [isConnectionMade]);
 
   function connectToServer() {
@@ -62,9 +67,10 @@ export const RoomContextProvider = ({ children }) => {
     }
   }
   function disConnectToServer() {
-    if (!socket.current) {
-      return;
-    } else {
+    if (!socket.current) return;
+
+    if (roomId) {
+      socket.current.emit("leave-room", roomId);
       socket.current.disconnect();
       localStorage.setItem("roomCode", "");
       navigate("/");

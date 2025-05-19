@@ -1,13 +1,6 @@
 import React, { useState } from "react";
 import RoomNav from "./RoomNav";
-import {
-  Heart,
-  SkipBack,
-  Play,
-  Pause,
-  SkipForward,
-  Volume2,
-} from "lucide-react";
+import { SkipBack, Play, Pause, SkipForward, Volume2 } from "lucide-react";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import { ListMusic, Search, Music } from "lucide-react";
@@ -20,9 +13,8 @@ import music_banner from "../../assets/music-banner.jpg";
 import YoutubePlayer from "../YoutubePlayer";
 import { usePlayerContext } from "../../context/PlayerContext";
 
-
 function RoomPage() {
-  const {isPlaying, toggleIsPlaying} = usePlayerContext()
+  const { isPlaying, toggleIsPlaying } = usePlayerContext();
   const { roomName } = useContext(RoomContext);
   const { disConnectToServer } = useContext(RoomContext);
   const [liked, setliked] = useState(false);
@@ -35,7 +27,7 @@ function RoomPage() {
     if (!isSearchActive) return;
     setisSearchActive(false);
   }
-  
+
   function toggleQueueToSearch() {
     if (isSearchActive) return;
     setisSearchActive(true);
@@ -117,7 +109,7 @@ function RoomPage() {
                       <SkipBack className="h-6 w-6" />
                     </button>
                     <button
-                      onClick={()=> toggleIsPlaying()}
+                      onClick={() => toggleIsPlaying()}
                       className="center bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 h-14 w-14 rounded-full shadow-lg shadow-purple-900/30 transition-transform hover:scale-105"
                     >
                       {isPlaying ? (

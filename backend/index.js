@@ -109,8 +109,8 @@ io.on("connection", (socket) => {
 
     if (room) {
       room.currentSong.isPaused = false;
-      console.log("play event sent")
-      io.to(roomId).emit("play"); 
+      console.log("play event sent");
+      io.to(roomId).emit("play");
     }
   });
 
@@ -119,11 +119,30 @@ io.on("connection", (socket) => {
 
     if (room) {
       room.currentSong.isPaused = true;
-      console.log("pause event sent")
-      io.to(roomId).emit("pause"); 
+      console.log("pause event sent");
+      io.to(roomId).emit("pause");
     }
   });
 
+  socket.on("leave-room", (roomId) => {
+    const room = rooms[roomId];
+    if (room) {
+      socket.leave(roomId);
+      room.members = room.members.filter(
+        (member) => member.userId !== socket.id
+      );
+
+      const hasHost = room.members.some((member) => member.isHost);
+      if (!hasHost && room.members.length > 0) {
+        room.members[0].isHost = true;
+      }
+
+      if (room.members.length < 1) {
+        delete rooms[roomId];
+      }
+      io.to(roomId).emit("sync-members", room.members);
+    }
+  });
   socket.on("disconnect", () => {
     console.log(socket.id, "Disconnected");
   });
