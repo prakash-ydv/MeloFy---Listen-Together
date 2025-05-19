@@ -14,7 +14,14 @@ import YoutubePlayer from "../YoutubePlayer";
 import { usePlayerContext } from "../../context/PlayerContext";
 
 function RoomPage() {
-  const { isPlaying, toggleIsPlaying, onReady } = usePlayerContext();
+  const {
+    isPlaying,
+    toggleIsPlaying,
+    onReady,
+    songDuration,
+    setCurrentTimeOfSong,
+    currentTimeOfSong,
+  } = usePlayerContext();
   const { roomName } = useContext(RoomContext);
   const { disConnectToServer } = useContext(RoomContext);
   const [liked, setliked] = useState(false);
@@ -22,7 +29,7 @@ function RoomPage() {
   const [queue, setQueue] = useState([]);
 
   const currentSong = {};
-  function togglePlayback() {}
+
   function toggleSearchToQueue() {
     if (!isSearchActive) return;
     setisSearchActive(false);
@@ -97,8 +104,8 @@ function RoomPage() {
                       className="w-full h-[60px] absolute top-[-15px] opacity-50 pointer-events-none"
                     ></canvas>
                     <Slider
-                      value={100}
-                      max={100}
+                      value={currentTimeOfSong}
+                      max={songDuration}
                       step={1}
                       className="custom-slider"
                     />

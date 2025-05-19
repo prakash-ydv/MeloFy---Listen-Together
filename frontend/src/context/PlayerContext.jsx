@@ -17,6 +17,8 @@ export const PlayerContextProvider = ({ children }) => {
   const { socket, roomId, queueWhenJoined } = useRoomContext();
   const [queue, setQueue] = useState([]);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [songDuration, setSongDuration] = useState(0);
+  const [currentTimeOfSong, setCurrentTimeOfSong] = useState(0);
 
   // queue sync
   useEffect(() => {
@@ -145,6 +147,17 @@ export const PlayerContextProvider = ({ children }) => {
   // Youtube custom controls
   const onReady = (event) => {
     playerRef.current = event.target;
+    const duration = event.target.getDuration();
+    setSongDuration(duration);
+
+    setInterval(() => {
+      if (playerRef.current && playerRef.current.getCurrentTime) {
+        const time = playerRef.current.getCurrentTime();
+        setCurrentTimeOfSong(time);
+      }
+    }, 1000);
+
+    return
   };
 
   return (
@@ -158,6 +171,9 @@ export const PlayerContextProvider = ({ children }) => {
         setIsPlaying,
         toggleIsPlaying,
         onReady,
+        songDuration,
+        currentTimeOfSong,
+        setCurrentTimeOfSong,
       }}
     >
       {children}
