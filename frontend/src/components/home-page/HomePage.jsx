@@ -1,8 +1,8 @@
 import { MusicIcon, Users, Headphones } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import  Swal  from "sweetalert2";
 import { useRoomContext } from "../../context/RoomContext";
-import getSearchData from "../../../api/getSearchData";
 
 export default function HomePage() {
   const {
@@ -17,15 +17,22 @@ export default function HomePage() {
     createRoom,
     joinRoom,
     connectToServer,
+    isRoomFound,
   } = useRoomContext();
 
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (!isRoomFound) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Room does not exists!",
+      });
+    }
     localStorage.setItem("roomCode", "");
     connectToServer();
-  }, []);
-  
+  }, [isRoomFound]);
 
   return (
     <div className="h-screen bg-gradient-to-br from-purple-900 via-indigo-800 to-black text-white overflow-hidden relative">

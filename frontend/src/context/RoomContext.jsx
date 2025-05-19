@@ -19,6 +19,7 @@ export const RoomContextProvider = ({ children }) => {
   const [userName, setUserName] = useState("");
   const [joinUserName, setJoinUserName] = useState("");
   const [joinRoomCode, setJoinRoomCode] = useState("");
+  const [isRoomFound, setIsRoomFound] = useState(true);
   const [isConnectionMade, setIsConnectionMade] = useState(false);
   const [members, setMembers] = useState(null);
   const [queueWhenJoined, setQueueWhenJoined] = useState([]);
@@ -33,7 +34,7 @@ export const RoomContextProvider = ({ children }) => {
       setRoomId(roomID);
       setRoomName(data.roomName);
       setMembers(data.members);
-      console.log(data.members);
+      setIsRoomFound(true);
       localStorage.setItem("roomCode", data.roomId);
       console.log("roomCode saved to localstorage");
     });
@@ -43,12 +44,17 @@ export const RoomContextProvider = ({ children }) => {
       setRoomId(data.roomId);
       setMembers(data.members);
       setQueueWhenJoined(data.queue);
+      setIsRoomFound(true);
       navigate("/room");
       localStorage.setItem("roomCode", data.roomId);
     });
 
     socket.current.on("sync-members", (members) => {
       setMembers(() => members);
+    });
+
+    socket.current.on("room-not-found", () => {
+      setIsRoomFound(false);
     });
 
     return () => {
@@ -118,6 +124,7 @@ export const RoomContextProvider = ({ children }) => {
         connectToServer,
         disConnectToServer,
         socket,
+        isRoomFound
       }}
     >
       {children}

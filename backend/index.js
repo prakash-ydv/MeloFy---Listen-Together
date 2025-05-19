@@ -85,7 +85,7 @@ io.on("connection", (socket) => {
       console.log(room.members);
       console.log(`${userName} joined room ${roomCode}`);
     } else {
-      socket.emit("error", { message: "Room not found." });
+      socket.emit("room-not-found", { message: "Room not found." });
     }
   });
 
