@@ -12,10 +12,13 @@ import { useRoomContext } from "./RoomContext";
 const PlayerContext = createContext();
 
 export const PlayerContextProvider = ({ children }) => {
+  const playerRef = useRef(null);
+
   const { socket, roomId, queueWhenJoined } = useRoomContext();
   const [queue, setQueue] = useState([]);
   const [isPlaying, setIsPlaying] = useState(false);
 
+  // queue sync
   useEffect(() => {
     setQueue(queueWhenJoined);
   }, [queueWhenJoined]);
@@ -30,12 +33,41 @@ export const PlayerContextProvider = ({ children }) => {
     };
 
     const handlePlay = () => {
-      console.log("Play event recieved");
-      setIsPlaying(true);
+      const player = playerRef.current;
+
+      if (!player) return;
+
+      const state = player.getPlayerState();
+
+      // States:
+      // -1 (unstarted)
+      // 0 (ended)
+      // 1 (playing)
+      // 2 (paused)
+      // 3 (buffering)
+      // 5 (video cued)
+
+      if (state !== 1) {
+        // If not already playing
+        player.playVideo();
+        setIsPlaying(true);
+        socket.current.emit("play-music", roomId); // Add corresponding socket emit
+      }
     };
+
     const handlePause = () => {
-      console.log("Pause event recieved");
-      setIsPlaying(false);
+      const player = playerRef.current;
+
+      if (!player) return;
+
+      const state = player.getPlayerState();
+
+      if (state === 1) {
+        // If currently playing
+        player.pauseVideo();
+        setIsPlaying(false);
+        socket.current.emit("stop-music", roomId);
+      }
     };
 
     socketInstance.on("song-queue-updated", handleQueueUpdate);
@@ -92,21 +124,27 @@ export const PlayerContextProvider = ({ children }) => {
     requestQueueUpdateToServer(newQueue);
   };
 
-  const playTheSong = () => {
-    setIsPlaying(true);
-    socket.current.emit("start-music", roomId);
+  const toggleIsPlaying = () => {
+    const player = playerRef.current;
+
+    if (!player) return;
+
+    const state = player.getPlayerState();
+
+    if (state === 1) {
+      player.pauseVideo();
+      setIsPlaying(false);
+      socket.current.emit("stop-music", roomId);
+    } else {
+      player.playVideo();
+      socket.current.emit("start-music", roomId);
+      setIsPlaying(true);
+    }
   };
 
-  const toggleIsPlaying = () => {
-    console.log("toggle button clicked");
-    if (isPlaying) {
-      console.log("pause the song");
-      socket.current.emit("stop-music", roomId);
-      setIsPlaying(false);
-    } else {
-      console.log("play the song");
-      playTheSong();
-    }
+  // Youtube custom controls
+  const onReady = (event) => {
+    playerRef.current = event.target;
   };
 
   return (
@@ -119,6 +157,7 @@ export const PlayerContextProvider = ({ children }) => {
         isPlaying,
         setIsPlaying,
         toggleIsPlaying,
+        onReady,
       }}
     >
       {children}

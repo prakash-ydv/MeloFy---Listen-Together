@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{} from 'react'
 import YouTube from 'react-youtube'
 
 function YoutubePlayer(props) {
@@ -7,13 +7,13 @@ function YoutubePlayer(props) {
       width: '640',
       playerVars: {
         // https://developers.google.com/youtube/player_parameters
-        autoplay: 1,
+        autoplay: 0,
       },
     };
   return (
     
-    <div>
-        {/* <YouTube opts={opts} videoId={props.videoId} /> */}
+    <div className=''>
+        <YouTube opts={opts} onReady={props.onReady} videoId={props.videoId} />
     </div>
   )
 }

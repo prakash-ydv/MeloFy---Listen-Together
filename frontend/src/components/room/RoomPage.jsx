@@ -14,7 +14,7 @@ import YoutubePlayer from "../YoutubePlayer";
 import { usePlayerContext } from "../../context/PlayerContext";
 
 function RoomPage() {
-  const { isPlaying, toggleIsPlaying } = usePlayerContext();
+  const { isPlaying, toggleIsPlaying, onReady } = usePlayerContext();
   const { roomName } = useContext(RoomContext);
   const { disConnectToServer } = useContext(RoomContext);
   const [liked, setliked] = useState(false);
@@ -38,7 +38,8 @@ function RoomPage() {
 
   return (
     <div className="min-h-screen p-5 lg:p-10 bg-gradient-to-br from-purple-900 via-indigo-800 to-black text-white overflow-hidden relative">
-      <YoutubePlayer videoId={"97xf5DXyXqg"} />
+      {/* Youtube Player */}
+      <YoutubePlayer onReady={onReady} videoId={"97xf5DXyXqg"} />
       {/* Animated background elements */}
       <div className="absolute top-20 left-20 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
       <div
@@ -81,9 +82,8 @@ function RoomPage() {
                 <div className="flex-1 w-full">
                   <div className="flex justify-between items-start">
                     <div>
-                      <h2 className="text-2xl w-3/5 sm:w-1/2 font-bold truncate">
-                        {currentSong.title ||
-                          "aal awala kela wala land lele mera dj harish"}
+                      <h2 className="text-2xl w-70 font-bold truncate">
+                        {currentSong.title || "Add song to play... "}
                       </h2>
                       <p className="text-white/70">{currentSong.artist}</p>
                     </div>
