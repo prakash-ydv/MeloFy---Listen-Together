@@ -6,7 +6,7 @@ function YoutubePlayer(props) {
     height: "390",
     width: "640",
     playerVars: {
-      autoplay: 0,
+      autoplay: 1,
       rel: 0,
     },
   };

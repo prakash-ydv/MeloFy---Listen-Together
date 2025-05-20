@@ -9,7 +9,7 @@ app.use(cors());
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: "http://localhost:5173", // Corrected `origin`, not `path`
+    origin: "http://localhost:5173",
     methods: ["GET", "POST"],
   },
 });
@@ -105,11 +105,11 @@ io.on("connection", (socket) => {
   });
 
   socket.on("start-music", (roomId) => {
-    console.log("play event init")
+    console.log("play event init");
     const room = rooms[roomId];
 
     if (room) {
-      console.log("Play Event Sent")
+      console.log("Play Event Sent");
       room.currentSong.isPaused = false;
       console.log("play event sent");
       io.to(roomId).emit("play");
