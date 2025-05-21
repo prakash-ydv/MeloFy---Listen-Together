@@ -120,10 +120,10 @@ export const PlayerContextProvider = ({ children }) => {
       const { time, isPlaying } = data;
       console.log("Time ", time, "isPlaying ", isPlaying);
 
-      console.log("Findin Player...")
+      console.log("Findin Player...");
       const player = playerRef.current;
       if (!player) return;
-      console.log("Player Found")
+      console.log("Player Found");
 
       // Seek first
       player.seekTo(time, true);
@@ -146,15 +146,30 @@ export const PlayerContextProvider = ({ children }) => {
     };
   }, [userId]);
 
-  // if Player is not ready then ask again for sync when ready
+  // if Player is not ready then ask again for sync when ready in every 10 seconds to sync perfectly
   useEffect(() => {
-  if (!playerRef.current) return;
-  if (!roomId || !userId || isAdmin) return;
+    if (!playerRef.current) return;
+    if (!roomId || !userId || isAdmin) return;
 
-  // Only after player is ready
-  console.log("Player ready. Asking admin for sync.");
-  socket.current.emit("ask-sync-again", { roomId, userId });
-}, [playerRef.current]);
+    socket.current.emit("ask-sync-again", { roomId, userId });
+
+    let numberOfInterval = 0;
+
+    const intervalId = setInterval(() => {
+      socket.current.emit("ask-sync-again", { roomId, userId });
+      numberOfInterval++;
+      console.log("Sync Interval Run");
+
+      // run only two times
+      if (numberOfInterval > 2) {
+        clearInterval(intervalId);
+      }
+    }, 5000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [playerRef.current]);
 
   const requestQueueUpdateToServer = (newQueue) => {
     if (!socket.current || !roomId) return;

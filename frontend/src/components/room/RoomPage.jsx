@@ -46,7 +46,9 @@ function RoomPage() {
   return (
     <div className="min-h-screen p-5 lg:p-10 bg-gradient-to-br from-purple-900 via-indigo-800 to-black text-white overflow-hidden relative">
       {/* Youtube Player */}
-      <YoutubePlayer onReady={onReady} videoId={"97xf5DXyXqg"} />
+      <div className="">
+        <YoutubePlayer onReady={onReady} videoId={"ieBAugTZgEA"} />
+      </div>
       {/* Animated background elements */}
       <div className="absolute top-20 left-20 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
       <div
@@ -109,6 +111,7 @@ function RoomPage() {
                       step={1}
                       className="custom-slider"
                     />
+                    <h1>{currentTimeOfSong}</h1>
                   </div>
 
                   <div className="flex justify-center items-center gap-4 mt-6">
