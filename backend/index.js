@@ -29,7 +29,11 @@ io.on("connection", (socket) => {
 
     // Create new room
     rooms[roomCode] = {
-      roomDetails: { roomId: roomCode, roomName: data.roomName },
+      roomDetails: {
+        roomId: roomCode,
+        roomName: data.roomName,
+        adminSocketId: socket.id,
+      },
       currentSong: {
         songID: "",
         currentDuration: "",
@@ -55,6 +59,7 @@ io.on("connection", (socket) => {
       roomId: roomCode,
       roomName: data.roomName,
       members: rooms[roomCode].members,
+      userId: socket.id,
     });
 
     totalRooms++;
@@ -80,12 +85,48 @@ io.on("connection", (socket) => {
         roomName: room.roomDetails.roomName,
         queue: room.songQueue,
         members: room.members,
+        userId: socket.id,
       });
       io.to(roomCode).emit("sync-members", room.members);
       console.log(room.members);
       console.log(`${userName} joined room ${roomCode}`);
     } else {
       socket.emit("room-not-found", { message: "Room not found." });
+    }
+  });
+
+  // sync for new user
+
+  // ask for current time to admin
+  socket.on("new-user-joined", (data) => {
+    const roomId = data.roomId;
+    const userId = data.userId;
+    console.log(roomId, userId, "Id");
+    const room = rooms[roomId];
+    const adminId = room.roomDetails.adminSocketId;
+
+    if (room) {
+      console.log("Asking admin for time");
+      io.to(adminId).emit("get-time-for-new-user", { userId });
+    }
+  });
+
+  // get current time from admin and send to joiner
+  socket.on("get-time-for-new-user-response", (data) => {
+    const { roomId, userId, time, isPlaying } = data;
+    console.log("Admin sent time", time, isPlaying);
+
+    console.log("Sendin sync event to joiner");
+    io.to(userId).emit("sync-for-joiner", { time, isPlaying });
+  });
+
+  socket.on("ask-sync-again", (data) => {
+    const { roomId, userId } = data;
+    const room = rooms[roomId];
+
+    if (room) {
+      console.log("Admin being asked again for time sync");
+      io.to(roomId).emit("get-time-for-new-user", { userId });
     }
   });
 
@@ -124,7 +165,7 @@ io.on("connection", (socket) => {
     if (room) {
       room.currentSong.isPaused = true;
       console.log("pause event sent");
-      console.log("current time", currentTimeOfSong)
+      console.log("current time", currentTimeOfSong);
       room.currentSong.currentDuration = currentTimeOfSong;
       io.to(roomId).emit("pause");
     }

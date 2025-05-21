@@ -14,7 +14,7 @@ const PlayerContext = createContext();
 export const PlayerContextProvider = ({ children }) => {
   const playerRef = useRef(null);
 
-  const { socket, roomId, queueWhenJoined } = useRoomContext();
+  const { socket, roomId, queueWhenJoined, isAdmin, userId } = useRoomContext();
   const [queue, setQueue] = useState([]);
   const [isPlaying, setIsPlaying] = useState(true);
   const [songDuration, setSongDuration] = useState(0);
@@ -85,6 +85,76 @@ export const PlayerContextProvider = ({ children }) => {
       socketInstance.off("pause", handlePause);
     };
   }, [socket]);
+
+  // sync song time for new joiner
+
+  useEffect(() => {
+    if (!isAdmin) return;
+
+    socket.current.on("get-time-for-new-user", (data) => {
+      const { roomId, userId } = data;
+      console.log("Get time for new user received");
+
+      const player = playerRef.current;
+      if (!player) return;
+
+      const time = player.getCurrentTime(); // Directly from the player
+      const isPlaying = player.getPlayerState() === 1; // 1 = playing
+
+      socket.current.emit("get-time-for-new-user-response", {
+        roomId,
+        userId,
+        time,
+        isPlaying,
+      });
+    });
+
+    return () => {
+      socket.current.off("get-time-for-new-user");
+    };
+  }, [userId]);
+
+  useEffect(() => {
+    socket.current.on("sync-for-joiner", (data) => {
+      console.log("sync request recieved for new joiner");
+      const { time, isPlaying } = data;
+      console.log("Time ", time, "isPlaying ", isPlaying);
+
+      console.log("Findin Player...")
+      const player = playerRef.current;
+      if (!player) return;
+      console.log("Player Found")
+
+      // Seek first
+      player.seekTo(time, true);
+
+      console.log("Seek Done");
+
+      // Then play or pause based on state
+      if (isPlaying) {
+        player.playVideo();
+      } else {
+        player.pauseVideo();
+      }
+
+      setCurrentTimeOfSong(time);
+      setIsPlaying(isPlaying);
+    });
+
+    return () => {
+      socket.current.off("sync-for-joiner");
+    };
+  }, [userId]);
+
+  // if Player is not ready then ask again for sync when ready
+  useEffect(() => {
+  if (!playerRef.current) return;
+  if (!roomId || !userId || isAdmin) return;
+
+  // Only after player is ready
+  console.log("Player ready. Asking admin for sync.");
+  socket.current.emit("ask-sync-again", { roomId, userId });
+}, [playerRef.current]);
 
   const requestQueueUpdateToServer = (newQueue) => {
     if (!socket.current || !roomId) return;

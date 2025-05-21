@@ -17,6 +17,8 @@ export const RoomContextProvider = ({ children }) => {
   const [roomId, setRoomId] = useState("");
   const [roomName, setRoomName] = useState("");
   const [userName, setUserName] = useState("");
+  const [userId, setUserId] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
   const [joinUserName, setJoinUserName] = useState("");
   const [joinRoomCode, setJoinRoomCode] = useState("");
   const [isRoomFound, setIsRoomFound] = useState(true);
@@ -34,6 +36,8 @@ export const RoomContextProvider = ({ children }) => {
       setRoomId(roomID);
       setRoomName(data.roomName);
       setMembers(data.members);
+      setUserId(data.userId);
+      setIsAdmin(true);
       setIsRoomFound(true);
       localStorage.setItem("roomCode", data.roomId);
       console.log("roomCode saved to localstorage");
@@ -44,9 +48,14 @@ export const RoomContextProvider = ({ children }) => {
       setRoomId(data.roomId);
       setMembers(data.members);
       setQueueWhenJoined(data.queue);
+      setUserId(data.userId);
       setIsRoomFound(true);
       navigate("/room");
       localStorage.setItem("roomCode", data.roomId);
+      socket.current.emit("new-user-joined", {
+        roomId: data.roomId,
+        userId: data.userId,
+      });
     });
 
     socket.current.on("sync-members", (members) => {
@@ -111,7 +120,9 @@ export const RoomContextProvider = ({ children }) => {
         setRoomId,
         roomName,
         setRoomName,
+        isAdmin,
         userName,
+        userId,
         setUserName,
         joinUserName,
         joinRoomCode,
@@ -124,7 +135,7 @@ export const RoomContextProvider = ({ children }) => {
         connectToServer,
         disConnectToServer,
         socket,
-        isRoomFound
+        isRoomFound,
       }}
     >
       {children}
