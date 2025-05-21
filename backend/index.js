@@ -109,19 +109,23 @@ io.on("connection", (socket) => {
     const room = rooms[roomId];
 
     if (room) {
+      const currentDuration = room.currentSong.currentDuration;
       console.log("Play Event Sent");
       room.currentSong.isPaused = false;
       console.log("play event sent");
-      io.to(roomId).emit("play");
+      io.to(roomId).emit("play", { currentDuration });
     }
   });
 
-  socket.on("stop-music", (roomId) => {
+  socket.on("stop-music", (data) => {
+    const { roomId, currentTimeOfSong } = data;
     const room = rooms[roomId];
 
     if (room) {
       room.currentSong.isPaused = true;
       console.log("pause event sent");
+      console.log("current time", currentTimeOfSong)
+      room.currentSong.currentDuration = currentTimeOfSong;
       io.to(roomId).emit("pause");
     }
   });

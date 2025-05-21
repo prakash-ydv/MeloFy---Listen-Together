@@ -16,7 +16,7 @@ export const PlayerContextProvider = ({ children }) => {
 
   const { socket, roomId, queueWhenJoined } = useRoomContext();
   const [queue, setQueue] = useState([]);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
   const [songDuration, setSongDuration] = useState(0);
   const [currentTimeOfSong, setCurrentTimeOfSong] = useState(0);
 
@@ -34,8 +34,9 @@ export const PlayerContextProvider = ({ children }) => {
       setQueue(data.queue || []);
     };
 
-    const handlePlay = () => {
+    const handlePlay = (data) => {
       const player = playerRef.current;
+      const { currentDuration } = data;
 
       if (!player) return;
 
@@ -53,6 +54,8 @@ export const PlayerContextProvider = ({ children }) => {
         // If not already playing
         player.playVideo();
         setIsPlaying(true);
+        setCurrentTimeOfSong(currentDuration);
+        player.seekTo(currentDuration, true);
         socket.current.emit("play-music", roomId); // Add corresponding socket emit
       }
     };
@@ -136,7 +139,7 @@ export const PlayerContextProvider = ({ children }) => {
     if (state === 1) {
       player.pauseVideo();
       setIsPlaying(false);
-      socket.current.emit("stop-music", roomId);
+      socket.current.emit("stop-music", { roomId, currentTimeOfSong });
     } else {
       player.playVideo();
       socket.current.emit("start-music", roomId);
@@ -157,7 +160,7 @@ export const PlayerContextProvider = ({ children }) => {
       }
     }, 1000);
 
-    return
+    return;
   };
 
   return (
