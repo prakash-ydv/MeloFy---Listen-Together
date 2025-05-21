@@ -146,14 +146,11 @@ io.on("connection", (socket) => {
   });
 
   socket.on("start-music", (roomId) => {
-    console.log("play event init");
     const room = rooms[roomId];
 
     if (room) {
       const currentDuration = room.currentSong.currentDuration;
-      console.log("Play Event Sent");
       room.currentSong.isPaused = false;
-      console.log("play event sent");
       io.to(roomId).emit("play", { currentDuration });
     }
   });
@@ -164,8 +161,6 @@ io.on("connection", (socket) => {
 
     if (room) {
       room.currentSong.isPaused = true;
-      console.log("pause event sent");
-      console.log("current time", currentTimeOfSong);
       room.currentSong.currentDuration = currentTimeOfSong;
       io.to(roomId).emit("pause");
     }
